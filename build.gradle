@@ -22,14 +22,15 @@ repositories {
     mavenCentral()
 }
 
+
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
     testCompile('org.springframework.boot:spring-boot-starter-test')
-    testImplementation 'junit:junit:4.12'
-//    testImplementation "com.google.truth:truth:1.0"
+    testImplementation('junit:junit:4.12')
+    testImplementation('com.google.truth:truth:1.0')
 }
 
 test {
