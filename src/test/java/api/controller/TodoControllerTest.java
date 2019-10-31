@@ -23,12 +23,12 @@ public class TodoControllerTest {
 	private TodoController controller;
 
 	@Before
-	public void setup() {
+	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 	}
 
     @Test
-    public void putTodo_SavesTodoToRepositoryAndReturnsTheResult() {
+    public void putTodoSavesTodoToRepositoryAndReturnsTheResult() {
     	Todo outputTodo = new Todo(101, "Buy milk", false);
     	Todo inputTodo = new Todo("Buy milk", false);
     	
@@ -39,7 +39,7 @@ public class TodoControllerTest {
     }
     
     @Test
-    public void getAllTodos_ReturnsAllTodosFromTheDAO() {
+    public void getAllTodosReturnsAllTodosFromTheDAO() {
     	List<Todo> allTodos = List.of(new Todo("todo_1", false), new Todo("todo_2", true));
 		when(todoRepository.findAll()).thenReturn(allTodos);
     	List<Todo> result = this.controller.getAllTodos();
