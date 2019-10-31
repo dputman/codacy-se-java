@@ -1,8 +1,10 @@
 package api.controller;
 
+import api.model.Todo;
+
 public class TodoController {
 
-    public int putTodo(int input) {
-        return input + 1;
-    }
+	public Todo putTodo(String title, boolean completed) {
+		return new Todo(title, completed);
+	}
 }
