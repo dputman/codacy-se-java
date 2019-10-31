@@ -28,10 +28,14 @@ public class TodoControllerTest {
 	}
 
     @Test
-    public void putTodo_CreatesNewTodoAndReturnsFullObject() {
-    	Todo result = this.controller.putTodo(new Todo("Buy milk", false));
-        assertThat(result.getTitle()).isEqualTo("Buy milk");
-        assertThat(result.isCompleted()).isFalse();
+    public void putTodo_SavesTodoToRepositoryAndReturnsTheResult() {
+    	Todo outputTodo = new Todo(101, "Buy milk", false);
+    	Todo inputTodo = new Todo("Buy milk", false);
+    	
+    	when(todoRepository.createTodo(inputTodo)).thenReturn(outputTodo);
+    	
+    	Todo result = this.controller.putTodo(inputTodo);
+    	assertThat(result).isSameInstanceAs(outputTodo);
     }
     
     @Test
@@ -39,6 +43,6 @@ public class TodoControllerTest {
     	List<Todo> allTodos = List.of(new Todo("todo_1", false), new Todo("todo_2", true));
 		when(todoRepository.findAll()).thenReturn(allTodos);
     	List<Todo> result = this.controller.getAllTodos();
-    	assertThat(result).isEqualTo(allTodos);
+    	assertThat(result).isSameInstanceAs(allTodos);
     }
 }

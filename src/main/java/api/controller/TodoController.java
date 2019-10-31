@@ -23,7 +23,7 @@ public class TodoController {
 	@PutMapping
 	@ResponseBody
 	public Todo putTodo(@RequestBody Todo newTodo) {
-		return newTodo;
+		return todoRepository.createTodo(newTodo);
 	}
 
 	@GetMapping
@@ -31,10 +31,4 @@ public class TodoController {
 	public List<Todo> getAllTodos() {
 		return todoRepository.findAll();
 	}
-	
-//	@GetMapping
-//	@ResponseBody
-//	public Todo getTodo() {
-//		return new Todo("something", true);
-//	}
 }

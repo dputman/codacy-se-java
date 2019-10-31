@@ -2,22 +2,24 @@ package api.model;
 
 public class Todo {
 	
-	private long id;
+	private Number id;
 	private String title;
 	private boolean completed;
-
+	
+	public Todo() {}
+	
 	public Todo(String title, boolean completed) {
 		this.title = title;
 		this.completed = completed;
 	}
 	
-	public Todo(long id, String title, boolean completed) {
+	public Todo(Number id, String title, boolean completed) {
 		this.id = id;
 		this.title = title;
 		this.completed = completed;
 	}
 	
-	public long getId() {
+	public Number getId() {
 		return id;
 	}
 
