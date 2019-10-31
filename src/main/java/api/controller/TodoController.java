@@ -3,6 +3,7 @@ package api.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,9 +22,15 @@ public class TodoController {
 	private TodoRepository todoRepository;
 
 	@PutMapping
-	@ResponseBody
-	public Todo putTodo(@RequestBody Todo newTodo) {
-		return todoRepository.createTodo(newTodo);
+	public ResponseEntity<Todo> putTodo(@RequestBody Todo newTodo) {
+		if(newTodo.getTitle() != null && newTodo.getTitle().length() > 0) {
+			Todo saved = todoRepository.createTodo(newTodo);
+			return ResponseEntity.ok(saved); 
+		} 
+		else {
+			return ResponseEntity.unprocessableEntity().body(null);
+		}
+		
 	}
 
 	@GetMapping
