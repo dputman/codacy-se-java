@@ -1,9 +1,11 @@
 package api.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -53,5 +55,14 @@ public class TodoController {
 		Todo result = todoRepository.findTodoById(id);
 		if(result != null) return ResponseEntity.ok(result);
 		else return ResponseEntity.notFound().build();
+	}
+	
+	@DeleteMapping("{id}")
+	@ResponseBody
+	public ResponseEntity<Map<String, Long>> deleteTodo(@PathVariable("id") long id) {
+		boolean todoWasDeleted = todoRepository.deleteTodoById(id);
+		if(todoWasDeleted) return ResponseEntity.ok(Map.of("id", id));
+		else return ResponseEntity.notFound().build();
+
 	}
 }
