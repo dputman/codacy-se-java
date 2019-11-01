@@ -7,21 +7,21 @@ A challenge for SE candidates at Codacy
 
 ## Requirements
 
-*  Java 11
-*  PostgreSQL (Tested against Postgres 12)
+* Java 11
+* PostgreSQL (Tested against Postgres 12)
 
 ## Setup
 
 Let's assume that Java 11 is taken care of.
 If Postgres is not already installed on your machine, I recommend using a Docker image. The following command will pull down the latest image and bind the standard Postgres port to localhost.
 
-```
+```bash
 docker run -p 5432:5432 --name codacy-postgres -e POSTGRES_PASSWORD=mysecretpassword -d postgres
 ```
 
 Once the Postgres container is running, you'll need to run the create script in "src/main/resources". These two commands assume you're in the root of the project.
 
-```
+```bash
 docker cp src/main/resources/create.psql codacy-postgres:/create.psql
 docker exec codacy-postgres /bin/sh -c 'psql -U postgres </create.psql'
 ```
@@ -32,12 +32,12 @@ Once Postgres is up and running, you will be able to run tests and launch the ap
 
 ### Running the tests
 
-```
+```bash
 ./gradlew test
 ```
 
 ### Starting the API
 
-```
+```bash
 ./gradlew bootRun
 ```
