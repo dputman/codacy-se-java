@@ -1,0 +1,14 @@
+create database codacy;
+
+\c codacy;
+
+create table todo
+(
+	id serial not null
+		constraint todo_pk
+			primary key,
+	title varchar not null,
+	completed boolean default false not null
+);
+
+alter table todo owner to postgres;

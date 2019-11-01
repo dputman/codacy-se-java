@@ -27,13 +27,10 @@ public class TodoController {
 	
 	@GetMapping
 	public ResponseEntity<List<Todo>> getAllTodos(@RequestParam(required=false) String q) {
-		if(q != null && q.equals("completed")) {
+		if(q != null && q.equals("completed"))
 			return ResponseEntity.ok(todoRepository.findAllCompleted());
-		}
-		else {
+		else
 			return ResponseEntity.ok(todoRepository.findAll());
-		}
-
 	}
 	
 	@GetMapping("{id}")
@@ -48,11 +45,9 @@ public class TodoController {
 		if(newTodo.getTitle() != null && newTodo.getTitle().length() > 0) {
 			Todo saved = todoRepository.createTodo(newTodo);
 			return ResponseEntity.ok(saved); 
-		} 
-		else {
-			return ResponseEntity.unprocessableEntity().body(null);
 		}
-		
+		else
+			return ResponseEntity.unprocessableEntity().body(null);	
 	}
 	
 	@PatchMapping("{id}")
@@ -74,8 +69,10 @@ public class TodoController {
 	@DeleteMapping("{id}")
 	public ResponseEntity<Map<String, Long>> deleteTodo(@PathVariable("id") long id) {
 		boolean todoWasDeleted = todoRepository.deleteTodoById(id);
-		if(todoWasDeleted) return ResponseEntity.ok(Map.of("id", id));
-		else return ResponseEntity.notFound().build();
+		if(todoWasDeleted) 
+			return ResponseEntity.ok(Map.of("id", id));
+		else 
+			return ResponseEntity.notFound().build();
 
 	}
 }
