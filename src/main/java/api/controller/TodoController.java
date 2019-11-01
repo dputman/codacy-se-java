@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,5 +38,13 @@ public class TodoController {
 	@ResponseBody
 	public List<Todo> getAllTodos() {
 		return todoRepository.findAll();
+	}
+	
+	@GetMapping("{id}")
+	@ResponseBody
+	public ResponseEntity<Todo> getTodoById(@PathVariable("id") long id) {
+		Todo result = todoRepository.findTodoById(id);
+		if(result != null) return ResponseEntity.ok(result);
+		else return ResponseEntity.notFound().build();
 	}
 }
