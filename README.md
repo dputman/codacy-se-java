@@ -7,8 +7,8 @@ A challenge for SE candidates at Codacy
 
 ## Requirements
 
-* Java 11
-* PostgreSQL (Tested against Postgres 12)
+*   Java 11
+*   PostgreSQL (Tested against Postgres 12)
 
 ## Setup
 
