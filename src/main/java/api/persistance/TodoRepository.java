@@ -1,5 +1,7 @@
 package api.persistance;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -53,8 +55,29 @@ public class TodoRepository {
 		return updatedRowCount > 0;
 	}
 
+	public boolean updateTodo(long id, Todo inputTodo) {
+		int updatedRowCount = template.update(this.generateUpdateStatement(inputTodo), this.generateUpdateMap(id, inputTodo));
+		return updatedRowCount > 0;
+	}
 
+	private Map<String, Object> generateUpdateMap(long id, Todo todo) {
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("id", id);
+		if(todo.getTitle() != null && todo.getTitle().length() > 0)
+			params.put("title", todo.getTitle());
+		if(todo.isCompleted() != null)
+			params.put("completed", todo.isCompleted());
+		return params;
+	}
 
+	private String generateUpdateStatement(Todo todo) {
+		List<String> columns = new ArrayList<String>();
+		if(todo.getTitle() != null && todo.getTitle().length() > 0)
+			columns.add("title = :title");
+		if(todo.isCompleted() != null)
+			columns.add(" completed = :completed");
+		return "UPDATE Todo SET " + String.join(",", columns) + " WHERE id = :id";
+	}
 }
 
 
