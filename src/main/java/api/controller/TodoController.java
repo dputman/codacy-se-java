@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import api.model.Todo;
@@ -58,8 +57,17 @@ public class TodoController {
 	
 	@PatchMapping("{id}")
 	public ResponseEntity<Todo> putTodo(@PathVariable("id") long id, @RequestBody Todo updatedTodo) {
-			Todo saved = todoRepository.updateTodo(id, updatedTodo);
-			return ResponseEntity.ok(saved); 
+			boolean shouldUpdateTitle = (updatedTodo.getTitle() != null && updatedTodo.getTitle().length() > 0);
+			boolean shouldUpdateCompleted = updatedTodo.isCompleted() != null;
+			
+			if(shouldUpdateTitle || shouldUpdateCompleted) {
+				boolean success = todoRepository.updateTodo(id, updatedTodo);
+				if(success)
+					return ResponseEntity.ok(todoRepository.findTodoById(id));
+				else
+					return ResponseEntity.notFound().build(); 
+			}
+			return ResponseEntity.unprocessableEntity().build(); 
 		
 	}
 	

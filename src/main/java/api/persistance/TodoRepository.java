@@ -55,9 +55,9 @@ public class TodoRepository {
 		return updatedRowCount > 0;
 	}
 
-	public Todo updateTodo(long id, Todo updatedTodo) {
+	public boolean updateTodo(long id, Todo updatedTodo) {
 		int updatedRowCount = template.update(this.generateUpdateStatement(id, updatedTodo), this.generateUpdateMap(id, updatedTodo));
-		return this.findTodoById(id);
+		return updatedRowCount > 0;
 	}
 
 	private Map<String, Object> generateUpdateMap(long id, Todo updatedTodo) {
