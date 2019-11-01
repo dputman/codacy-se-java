@@ -55,26 +55,26 @@ public class TodoRepository {
 		return updatedRowCount > 0;
 	}
 
-	public boolean updateTodo(long id, Todo updatedTodo) {
-		int updatedRowCount = template.update(this.generateUpdateStatement(id, updatedTodo), this.generateUpdateMap(id, updatedTodo));
+	public boolean updateTodo(long id, Todo inputTodo) {
+		int updatedRowCount = template.update(this.generateUpdateStatement(inputTodo), this.generateUpdateMap(id, inputTodo));
 		return updatedRowCount > 0;
 	}
 
-	private Map<String, Object> generateUpdateMap(long id, Todo updatedTodo) {
+	private Map<String, Object> generateUpdateMap(long id, Todo todo) {
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		params.put("id", id);
-		if(updatedTodo.getTitle() != null && updatedTodo.getTitle().length() > 0)
-			params.put("title", updatedTodo.getTitle());
-		if(updatedTodo.isCompleted() != null)
-			params.put("completed", updatedTodo.isCompleted());
+		if(todo.getTitle() != null && todo.getTitle().length() > 0)
+			params.put("title", todo.getTitle());
+		if(todo.isCompleted() != null)
+			params.put("completed", todo.isCompleted());
 		return params;
 	}
 
-	private String generateUpdateStatement(long id, Todo updatedTodo) {
+	private String generateUpdateStatement(Todo todo) {
 		List<String> columns = new ArrayList<String>();
-		if(updatedTodo.getTitle() != null && updatedTodo.getTitle().length() > 0)
+		if(todo.getTitle() != null && todo.getTitle().length() > 0)
 			columns.add("title = :title");
-		if(updatedTodo.isCompleted() != null)
+		if(todo.isCompleted() != null)
 			columns.add(" completed = :completed");
 		return "UPDATE Todo SET " + String.join(",", columns) + " WHERE id = :id";
 	}
