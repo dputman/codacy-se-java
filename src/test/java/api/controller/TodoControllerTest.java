@@ -62,7 +62,7 @@ public class TodoControllerTest {
     public void getAllTodosReturnsAllTodosFromTheRepository() {
     	List<Todo> allTodos = List.of(new Todo("todo_1", false), new Todo("todo_2", true));
 		when(todoRepository.findAll()).thenReturn(allTodos);
-    	List<Todo> result = this.controller.getAllTodos();
+    	List<Todo> result = this.controller.getAllTodos(null).getBody();
     	assertThat(result).isSameInstanceAs(allTodos);
     }
 }
