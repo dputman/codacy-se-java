@@ -7,9 +7,8 @@ A challenge for SE candidates at Codacy
 
 ## Requirements
 
-* Java 11
-* PostgreSQL (Tested against Postgres 12)
-
+*  Java 11
+*  PostgreSQL (Tested against Postgres 12)
 
 ## Setup
 
@@ -31,15 +30,14 @@ docker exec codacy-postgres /bin/sh -c 'psql -U postgres </create.psql'
 
 Once Postgres is up and running, you will be able to run tests and launch the api using Gradle.
 
-#### Running the tests
+### Running the tests
 
 ```
 ./gradlew test
 ```
 
-#### Starting the API
+### Starting the API
 
 ```
 ./gradlew bootRun
-```
 ```
