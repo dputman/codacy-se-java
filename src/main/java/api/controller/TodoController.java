@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,8 +37,14 @@ public class TodoController {
 
 	@GetMapping
 	@ResponseBody
-	public List<Todo> getAllTodos() {
-		return todoRepository.findAll();
+	public ResponseEntity<List<Todo>> getAllTodos(@RequestParam(required=false) String q) {
+		if(q != null && q.equals("completed")) {
+			return ResponseEntity.ok(todoRepository.findAllCompleted());
+		}
+		else {
+			return ResponseEntity.ok(todoRepository.findAll());
+		}
+
 	}
 	
 	@GetMapping("{id}")
