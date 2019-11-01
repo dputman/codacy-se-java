@@ -32,12 +32,13 @@ public class TodoRepository {
 	public Todo createTodo(Todo inputTodo) {
 		String INSERT_SQL = "INSERT into Todo (title, completed) values(:title, :completed)";
 		KeyHolder keyHolder = new GeneratedKeyHolder();
-		Map<String, Object> data = Map.of("title", inputTodo.getTitle(), "completed", inputTodo.isCompleted());
-		MapSqlParameterSource params = new MapSqlParameterSource(data);
+		boolean isCompleted = inputTodo.isCompleted() == null ? false : inputTodo.isCompleted();
 		
-		template.update(INSERT_SQL, params, keyHolder, new String[] {"id"});
+		Map<String, Object> mapOfParams = Map.of("title", inputTodo.getTitle(), "completed", isCompleted);
+		MapSqlParameterSource paramSource = new MapSqlParameterSource(mapOfParams);
 		
-	    return new Todo(keyHolder.getKey(), inputTodo.getTitle(), inputTodo.isCompleted());
+		template.update(INSERT_SQL, paramSource, keyHolder, new String[] {"id"});
+	    return new Todo(keyHolder.getKey(), inputTodo.getTitle(), isCompleted);
 	}
 
 	public Todo findTodoById(long id) {
