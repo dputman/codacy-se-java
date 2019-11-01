@@ -27,7 +27,9 @@ public class TodoController {
 	
 	@GetMapping
 	public ResponseEntity<List<Todo>> getAllTodos(@RequestParam(required=false) String q) {
-		if(q != null && q.equals("completed"))
+		boolean shouldFilter = q != null && q.equals("completed");
+		
+		if(shouldFilter)
 			return ResponseEntity.ok(todoRepository.findAllCompleted());
 		else
 			return ResponseEntity.ok(todoRepository.findAll());
@@ -35,19 +37,22 @@ public class TodoController {
 	
 	@GetMapping("{id}")
 	public ResponseEntity<Todo> getTodoById(@PathVariable("id") long id) {
-		Todo result = todoRepository.findTodoById(id);
-		if(result != null) return ResponseEntity.ok(result);
-		else return ResponseEntity.notFound().build();
+		Todo todo = todoRepository.findTodoById(id);
+		
+		if(todo != null) 
+			return ResponseEntity.ok(todo);
+		else 
+			return ResponseEntity.notFound().build();
 	}
 
 	@PutMapping
 	public ResponseEntity<Todo> putTodo(@RequestBody Todo newTodo) {
-		if(newTodo.getTitle() != null && newTodo.getTitle().length() > 0) {
-			Todo saved = todoRepository.createTodo(newTodo);
-			return ResponseEntity.ok(saved); 
-		}
+		boolean titleIsValid = newTodo.getTitle() != null && newTodo.getTitle().length() > 0;
+		
+		if(titleIsValid) 
+			return ResponseEntity.ok(todoRepository.createTodo(newTodo)); 
 		else
-			return ResponseEntity.unprocessableEntity().body(null);	
+			return ResponseEntity.unprocessableEntity().build();	
 	}
 	
 	@PatchMapping("{id}")
@@ -69,6 +74,7 @@ public class TodoController {
 	@DeleteMapping("{id}")
 	public ResponseEntity<Map<String, Long>> deleteTodo(@PathVariable("id") long id) {
 		boolean todoWasDeleted = todoRepository.deleteTodoById(id);
+		
 		if(todoWasDeleted) 
 			return ResponseEntity.ok(Map.of("id", id));
 		else 
