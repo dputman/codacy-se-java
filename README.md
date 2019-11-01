@@ -26,3 +26,20 @@ Once the Postgres container is running, you'll need to run the create script in 
 docker cp src/main/resources/create.psql codacy-postgres:/create.psql
 docker exec codacy-postgres /bin/sh -c 'psql -U postgres </create.psql'
 ```
+
+## Run
+
+Once Postgres is up and running, you will be able to run tests and launch the api using Gradle.
+
+#### Running the tests
+
+```
+./gradlew test
+```
+
+#### Starting the API
+
+```
+./gradlew bootRun
+```
+```
