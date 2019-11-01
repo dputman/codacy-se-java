@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -33,7 +34,7 @@ public class TodoRepository {
 	public Todo createTodo(Todo inputTodo) {
 		String INSERT_SQL = "INSERT into Todo (title, completed) values(:title, :completed)";
 		KeyHolder keyHolder = new GeneratedKeyHolder();
-		SqlParameterSource data = new BeanPropertySqlParameterSource(inputTodo);
+		MapSqlParameterSource data = new MapSqlParameterSource(Map.of("title", inputTodo.getTitle(), "completed", inputTodo.isCompleted()));
 		template.update(INSERT_SQL, data, keyHolder, new String[] {"id"});
 		 
 	    return new Todo(keyHolder.getKey(), inputTodo.getTitle(), inputTodo.isCompleted());
