@@ -4,16 +4,16 @@ public class Todo {
 	
 	private Number id;
 	private String title;
-	private boolean completed;
+	private Boolean completed;
 	
 	public Todo() {}
 	
-	public Todo(String title, boolean completed) {
+	public Todo(String title, Boolean completed) {
 		this.title = title;
 		this.completed = completed;
 	}
 	
-	public Todo(Number id, String title, boolean completed) {
+	public Todo(Number id, String title, Boolean completed) {
 		this.id = id;
 		this.title = title;
 		this.completed = completed;
@@ -27,7 +27,7 @@ public class Todo {
 		return this.title;
 	}
 
-	public boolean isCompleted() {
+	public Boolean isCompleted() {
 		return this.completed;
 	}
 	
