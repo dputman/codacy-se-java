@@ -48,6 +48,11 @@ public class TodoRepository {
 		return result;
 	}
 
+	public boolean deleteTodoById(long id) {
+		int updatedRowCount = template.update("DELETE FROM Todo WHERE id = :id", Map.of("id", id));
+		return updatedRowCount > 0;
+	}
+
 
 
 }
